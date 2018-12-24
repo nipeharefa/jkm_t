@@ -1,0 +1,14 @@
+version: "3"
+services:
+  db:
+    container_name: "jakmall-db"
+    image: "mariadb:10.3"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: jakmall
+      MYSQL_PASSWORD: password
+      MYSQL_USER: jakmall
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - "./var/docker/jakmalldb:/var/lib/mysql"
