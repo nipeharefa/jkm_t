@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+
+use Illuminate\Support\Facades\Auth;
+use App\Service\OrderCreator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // dd(Auth::user());
     }
 
     /**
@@ -23,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // dd(Hash::make('s'));
+        // dd(Auth::user());
     }
 }

@@ -54,6 +54,8 @@ class PaymentController extends Controller
 
             DB::commit();
 
+            return redirect()->to(route('index.order'));
+
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;

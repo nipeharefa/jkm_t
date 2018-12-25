@@ -30,7 +30,9 @@ class PaymentRequest extends FormRequest
                 'required',
                 'integer',
                 Rule::exists('orders')->where(function ($query) {
-                    $query->where('status', Order::STATUS_WAITING_PAYMENT);
+                    $query
+                        ->where('user_id', auth()->user()->id)
+                        ->where('status', Order::STATUS_WAITING_PAYMENT);
                 }),
             ]
         ];

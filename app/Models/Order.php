@@ -26,7 +26,7 @@ class Order extends Model
 
     public function getDescriptionAttribute()
     {
-        if (self::PREPAID_BALANCE === $this->type) {
+        if (self::PREPAID_BALANCE === $this->order_type) {
 
             return sprintf('%s for %s', $this->prepaidBalance->value, $this->prepaidBalance->phone_number);
         }

@@ -15,7 +15,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $orderNumberquery = $request->order_number ?? null;
-        $ordersQuery = Order::query();
+        $ordersQuery = Order::query()->where('user_id', auth()->user()->id);
 
         if (null !== $orderNumberquery) {
 

@@ -1,7 +1,7 @@
-@extends('layout.app')
+@extends('layout.app-auth')
 
 @section('content')
-    <div class="table-order-container">
+    <div class="container">
         <form method="GET" action="{{ route('index.order') }}">
             <input type="search" placeholder="Search Order number here" name="order_number" />
         </form>

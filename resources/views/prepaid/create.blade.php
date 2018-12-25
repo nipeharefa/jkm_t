@@ -1,7 +1,8 @@
 @extends('layout.app')
 
 @section('content')
-    @include('erros.error')
+
+    @includeWhen($errors->any(), 'errors.error')
 
     <form method="POST" action="{{ route('store.prepaid-balance') }}">
 

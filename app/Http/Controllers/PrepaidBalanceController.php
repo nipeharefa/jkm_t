@@ -5,11 +5,25 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PrepaidBalancerequest;
 use App\Models\Order;
 use App\Models\PrepaidBalance;
+use App\Service\OrderCreator;
 use DB;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Hash;
+
 class PrepaidBalanceController extends Controller
 {
+    /**
+     * Undocumented variable
+     *
+     * @var App\Service\OrderCreator
+     */
+    private $orderCreator;
+
+    public function __construct(OrderCreator $orderCreator)
+    {
+        $this->orderCreator = $orderCreator;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -46,12 +60,7 @@ class PrepaidBalanceController extends Controller
             $prepaidBalance->value = $request->value;
             $prepaidBalance->phone_number = $request->phone_number;
 
-            $order = new Order();
-            $order->order_type = Order::PREPAID_BALANCE;
-            $order->order_number = rand(1000000000, 9999999999);
-            $order->total = $request->value + ($request->value * 0.05);
-            $order->status = Order::STATUS_WAITING_PAYMENT;
-            $order->save();
+            $order = $this->orderCreator->createOrder(Order::PREPAID_BALANCE, $request->value);
             $order->prepaidBalance()->save($prepaidBalance);
 
             DB::commit();

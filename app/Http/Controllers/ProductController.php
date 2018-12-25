@@ -5,11 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductOrderRequest;
 use App\Models\Order;
 use App\Models\ProductCommerce;
+use App\Service\OrderCreator;
 use DB;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    /**
+     * Undocumented variable
+     *
+     * @var App\Service\OrderCreator
+     */
+    private $orderCreator;
+
+    public function __construct(OrderCreator $orderCreator)
+    {
+        $this->orderCreator = $orderCreator;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -47,12 +59,7 @@ class ProductController extends Controller
             $productCommerce->product = $request->product;
             $productCommerce->shipping_address = $request->shipping_address;
 
-            $order = new Order();
-            $order->order_type = Order::PRODUCT_COMMERCE;
-            $order->order_number = rand(1000000000, 9999999999);
-            $order->total = $request->price + 10000;
-            $order->status = Order::STATUS_WAITING_PAYMENT;
-            $order->save();
+            $order = $this->orderCreator->createOrder(Order::PRODUCT_COMMERCE, $request->price);
 
             $order->productCommerce()->save($productCommerce);
 

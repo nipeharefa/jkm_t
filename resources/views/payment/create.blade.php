@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @include('errors.error')
+    @includeWhen($errors->any(), 'errors.error')
 
     <div class="payment-form">
         <form action="{{ route('store.payment') }}" class="form" method="POST">

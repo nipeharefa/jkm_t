@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-    @include('errors.error')
+    @includeWhen($errors->any(), 'errors.error')
 
     <div class="form-container">
         <form class="form" method="POST" action="{{ route('create.order-product') }}">
